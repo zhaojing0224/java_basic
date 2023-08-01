@@ -1,9 +1,9 @@
 package ch04;
-
+/**
+ * 問題７:⾏列（２次元配列）の和を計算してください。
+ */
 public class T0407 {
-//問題７:⾏列（２次元配列）の和を計算してください。//
 	public static void main(String[] args) {
-		// TODO 自動生成されたメソッド・スタブ
 		int [][] array2d = new int [][] {
 			{1,2,3,4},
 			{5,6,7,8}

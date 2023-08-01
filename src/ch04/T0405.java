@@ -1,9 +1,9 @@
 package ch04;
-
+/**
+ * 問題５:int[] array = new int[] {1, 3, 5, 7, 100, 0, 1}; 左の配列の最⼤値と最⼩桁値をSystem.out.println()
+ */
 public class T0405 {
-	//問題５:int[] array = new int[] {1, 3, 5, 7, 100, 0, 1}; 左の配列の最⼤値と最⼩桁値をSystem.out.println()//
 	public static void main(String[] args) {
-		// TODO 自動生成されたメソッド・スタブ
 		int[] array = new int[] { 1, 3, 5, 7, 100, 0, 1 };
 
 		int max = Integer.MIN_VALUE;
