@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.jp.tihtih.homework;
+package trymyself.newpackage;
 
+import co.jp.tihtih.homework.JdbcDemo;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -21,7 +22,7 @@ import java.util.logging.Logger;
  */
 public class CompanyInfoDao {
 
-    public void addCompanyInfo(CompanyObj companyObj) {
+    public void addCompanyInfoDao(CompanyObj companyObj) {
 
         String jdbcUrl = "jdbc:postgresql://localhost:5432/zhao";
         String username = "postgres";
@@ -62,9 +63,9 @@ public class CompanyInfoDao {
 
     }
 
-    public List<CompanyObj> getCompanyInfo() {
+    public List<co.jp.tihtih.homework.CompanyObj> getCompanyInfo() {
 
-        List<CompanyObj> list = new ArrayList<CompanyObj>();
+        List<co.jp.tihtih.homework.CompanyObj> list = new ArrayList<co.jp.tihtih.homework.CompanyObj>();
 
         String jdbcUrl = "jdbc:postgresql://localhost:5432/zhao";
         String username = "postgres";
@@ -91,8 +92,8 @@ public class CompanyInfoDao {
                 String cr = resultSet.getString("cr");
                 String name = resultSet.getString("name");
                 String email = resultSet.getString("email");
-                
-                CompanyObj obj = new CompanyObj();
+
+                co.jp.tihtih.homework.CompanyObj obj = new co.jp.tihtih.homework.CompanyObj();
                 obj.setCompanyName(companyname);
                 obj.setCr(cr);
                 obj.setName(name);
