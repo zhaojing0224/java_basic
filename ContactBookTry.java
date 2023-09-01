@@ -5,6 +5,7 @@
  */
 package trymyself.newpackage;
 
+import co.jp.tihtih.homework.CompanyInfoDao;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,7 +36,7 @@ public class ContactBookTry extends javax.swing.JFrame {
 
     public void init() {
 
-        ComapnyInfoTryDao dao = new ComapnyInfoTryDao();
+        CompanyInfoTryDao dao = new CompanyInfoTryDao();
 
         List<CompanyObjTry> list = dao.getCompanyInfoTry();
 
@@ -251,6 +252,11 @@ public class ContactBookTry extends javax.swing.JFrame {
         obj.setName(thirdVal);
         obj.setEmail(fifthVal);
 
+        CompanyInfoTryDao dao = new CompanyInfoTryDao();
+        dao.addCompanyInfoTry(obj);
+        
+        init();
+        
     }//GEN-LAST:event_btnEditActionPerformed
 
     /**
