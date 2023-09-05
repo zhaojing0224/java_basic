@@ -48,7 +48,7 @@ public class mainForm extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("MS UI Gothic", 1, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 51, 153));
-        jButton1.setText("従業員情報管理画面 ");
+        jButton1.setText("従業員情報管理 ");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -63,7 +63,7 @@ public class mainForm extends javax.swing.JFrame {
 
         jButton3.setFont(new java.awt.Font("MS UI Gothic", 1, 18)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 51, 153));
-        jButton3.setText("勤怠情報管理画面 ");
+        jButton3.setText("勤怠情報管理");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -100,7 +100,7 @@ public class mainForm extends javax.swing.JFrame {
 
         jButton2.setFont(new java.awt.Font("MS UI Gothic", 1, 18)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 51, 153));
-        jButton2.setText("給与明細作成画面");
+        jButton2.setText("給与明細作成");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -124,7 +124,7 @@ public class mainForm extends javax.swing.JFrame {
 
         jButton6.setFont(new java.awt.Font("MS UI Gothic", 1, 18)); // NOI18N
         jButton6.setForeground(new java.awt.Color(255, 51, 153));
-        jButton6.setText("賃金台帳管理画面 ");
+        jButton6.setText("賃金台帳管理");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -197,23 +197,37 @@ public class mainForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+
+        new PayslipCreation().setVisible(true);
+        this.dispose();
+
+// TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+
+        new SalaryCalculation().setVisible(true);
+        this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+
+        new PayrollLedger().setVisible(true);
+        this.dispose();
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+
+        new Attendance().setVisible(true);
+        this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-         new EmployeeInfoEdit().setVisible(true);
+        new EmployeeInfoEdit().setVisible(true);
         this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
