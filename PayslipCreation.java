@@ -18,6 +18,30 @@ public class PayslipCreation extends javax.swing.JFrame {
      */
     public PayslipCreation() {
         initComponents();
+        setYearMonth();
+    }
+
+    public void setYearMonth() {
+
+        // 获取当前年份
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+
+        // 设置年份的范围，例如，你可以设置从 2000 年到当前年份
+        int startYear = 2000;
+
+        // 清空现有的 ComboBox 内容
+        jComboBox1.removeAllItems();
+
+        // 向 ComboBox 中添加年份选项
+        for (int year = currentYear; year >= startYear; year--) {
+            jComboBox1.addItem(String.valueOf(year));
+        }
+
+        for (int i = 1; i < 13; i++) {
+
+            jComboBox2.addItem(String.valueOf(i));
+        }
+
     }
 
     /**
@@ -255,6 +279,7 @@ public class PayslipCreation extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("会社事務労務会計システム－給与明細作成");
 
         jLabel4.setFont(new java.awt.Font("MS UI Gothic", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 51, 153));
@@ -720,8 +745,7 @@ public class PayslipCreation extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTextField37, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField36, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(jTextField36, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addGap(24, 24, 24)
@@ -797,14 +821,12 @@ public class PayslipCreation extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
             }
         });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox2ActionPerformed(evt);
@@ -834,7 +856,7 @@ public class PayslipCreation extends javax.swing.JFrame {
                     .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -875,7 +897,7 @@ public class PayslipCreation extends javax.swing.JFrame {
                 .addComponent(jButton2)
                 .addGap(81, 81, 81))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(20, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22))
         );
@@ -944,38 +966,10 @@ public class PayslipCreation extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
 
-        // 获取当前年份
-    int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-
-    // 设置年份的范围，例如，你可以设置从 2000 年到当前年份
-    int startYear = 2000;
-
-    // 清空现有的 ComboBox 内容
-    jComboBox1.removeAllItems();
-
-    // 向 ComboBox 中添加年份选项
-    for (int year = currentYear; year >= startYear; year--) {
-        jComboBox1.addItem(String.valueOf(year));
-    }
-        
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
-
-        // 创建包含月份名称的字符串数组
-    String[] months = new String[]{
-        "1月", "2月", "3月", "4月", "5月", "6月",
-        "7月", "8月", "9月", "10月", "11月", "12月"
-    };
-
-    // 清空现有的 ComboBox 内容
-    jComboBox2.removeAllItems();
-
-    // 向 ComboBox 中添加月份选项
-    for (String month : months) {
-        jComboBox2.addItem(month);
-    }
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox2ActionPerformed
