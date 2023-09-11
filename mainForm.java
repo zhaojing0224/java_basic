@@ -44,6 +44,7 @@ public class mainForm extends javax.swing.JFrame {
         jLabel3.setText("会社事務労務会計システム");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("会社事務労務会計システム");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jButton1.setFont(new java.awt.Font("MS UI Gothic", 1, 18)); // NOI18N
@@ -227,7 +228,7 @@ public class mainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new EmployeeInfoEdit().setVisible(true);
+        new EmployeeInfoEditA().setVisible(true);
         this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
