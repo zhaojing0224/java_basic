@@ -70,6 +70,9 @@ public class EmployeeObj {
     // 在留資格
     private String residenceStatus;
 
+    // 検索
+    private String Serch;
+
     public String getEmployeeCode() {
         return employeeCode;
     }
@@ -228,6 +231,14 @@ public class EmployeeObj {
 
     public void setResidenceStatus(String residenceStatus) {
         this.residenceStatus = residenceStatus;
+    }
+
+    public String getSerch() {
+        return Serch;
+    }
+
+    public void setSerch(String Serch) {
+        this.Serch = Serch;
     }
 
 }

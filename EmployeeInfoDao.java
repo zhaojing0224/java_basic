@@ -8,6 +8,7 @@ package hrsys.dao;
 import hrsys.obj.EmployeeObj;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -69,7 +71,7 @@ public class EmployeeInfoDao {
             sb.append("'" + currentTime + "');");
 
             System.out.println(sb.toString());
-       
+
             // 4. 创建 Statement 对象
             Statement statement = connection.createStatement();
 
@@ -90,6 +92,7 @@ public class EmployeeInfoDao {
 
     public List<EmployeeObj> getEmployeeInfo() {
 
+        System.out.println("ccccccc");
         List<EmployeeObj> list = new ArrayList<EmployeeObj>();
 
         String jdbcUrl = "jdbc:postgresql://localhost:5432/zhao";
@@ -108,30 +111,31 @@ public class EmployeeInfoDao {
             // 4. 创建 Statement 对象
             Statement statement = connection.createStatement();
 
+            System.out.println(sql);
             // 5. 执行查询并获取结果集
             ResultSet resultSet = statement.executeQuery(sql);
 
             // 6. 处理结果集
             while (resultSet.next()) {
-                String employeeCode = resultSet.getString("employeeCode");
+                String employeeCode = resultSet.getString("employee_code");
                 String name = resultSet.getString("name");
                 String katakana = resultSet.getString("katakana");
                 String birth = resultSet.getString("birth");
-                String phoneNumber = resultSet.getString("phoneNumber");
+                String phoneNumber = resultSet.getString("phone_number");
                 String email = resultSet.getString("email");
-                String dateOfJoining = resultSet.getString("dateOfJoining");
-                String dateOfResignation = resultSet.getString("dateOfResignation");
-                String postalCode = resultSet.getString("postalCode");
+                String dateOfJoining = resultSet.getString("date_of_joining");
+                String dateOfResignation = resultSet.getString("date_of_resignation");
+                String postalCode = resultSet.getString("postal_code");
                 String address = resultSet.getString("address");
                 String nationality = resultSet.getString("nationality");
-                String contractType = resultSet.getString("contractType");
-                String salaryType = resultSet.getString("salaryType");
-                String jobTitle = resultSet.getString("jobTitle");
-                String healthInsuranceNumber = resultSet.getString("healthInsuranceNumber");
-                String laborInsuranceNumber = resultSet.getString("laborInsuranceNumber");
-                String residenceCardNumber = resultSet.getString("residenceCardNumber");
-                String periodOfStay = resultSet.getString("periodOfStay");
-                String residenceStatus = resultSet.getString("residenceStatus");
+                String contractType = resultSet.getString("contract_type");
+                String salaryType = resultSet.getString("salary_type");
+                String jobTitle = resultSet.getString("job_title");
+                String healthInsuranceNumber = resultSet.getString("health_insurance_number");
+                String laborInsuranceNumber = resultSet.getString("labor_insurance_number");
+                String residenceCardNumber = resultSet.getString("residence_card_number");
+                String periodOfStay = resultSet.getString("period_of_stay");
+                String residenceStatus = resultSet.getString("residence_status");
 
                 EmployeeObj obj = new EmployeeObj();
                 obj.setEmployeeCode(employeeCode);
@@ -166,6 +170,56 @@ public class EmployeeInfoDao {
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ConnJdbc.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        return list;
+    }
+
+    public List<EmployeeObj> setEmployeeList() throws SQLException {
+
+        List<EmployeeObj> list = new ArrayList<EmployeeObj>();
+
+        String jdbcUrl = "jdbc:postgresql://localhost:5432/zhao";
+        String username = "postgres";
+        String password = "postgres";
+
+        try {
+            // 1. 注册 PostgreSQL 驱动程序
+            Class.forName("org.postgresql.Driver");
+            // 2. 建立数据库连接
+            Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
+
+            // 3. 创建 SQL 语句
+            String sql = "SELECT * FROM EmployeeInfo WHERE employeeCode = ?";
+
+            // 4. 创建 Statement 对象
+            Statement statement = connection.createStatement();
+
+            // 5. 执行查询并获取结果集
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            // 6. 处理结果集
+            while (resultSet.next()) {
+                String employeeCode = resultSet.getString("employeeCode");
+                String name = resultSet.getString("name");
+
+                EmployeeObj obj = new EmployeeObj();
+                obj.setEmployeeCode(employeeCode);
+                obj.setName(name);
+                list.add(obj);
+
+            }
+
+            // 7. 关闭资源
+            resultSet.close();
+            statement.close();
+            connection.close();
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(ConnJdbc.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
         return list;
     }
