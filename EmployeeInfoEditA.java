@@ -44,12 +44,14 @@ public class EmployeeInfoEditA extends javax.swing.JFrame {
         init();
     }
 
-    public void init(){
+    /**
+     * EmployeeInfoList
+     */
+    public void init() {
 
         EmployeeInfoService employeeInfoService = new EmployeeInfoService();
 
         List<EmployeeObj> list = employeeInfoService.getEmployeeInfoList();
-        
 
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         model.setRowCount(0);
@@ -69,6 +71,24 @@ public class EmployeeInfoEditA extends javax.swing.JFrame {
         Connection conn = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+    }
+
+    private void updateJTable(String searchText) {
+
+        String serch = jTextField17.getText();
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        model.setRowCount(0); // 清空表格内容
+
+        EmployeeInfoService employeeInfoService = new EmployeeInfoService();
+
+        List<EmployeeObj> list = employeeInfoService.getEmployeeInfoList();
+
+        for (EmployeeObj obj : list) {
+            if (obj.getEmployeeCode().equals(searchText) || obj.getName().equals(searchText)) {
+                String[] value = new String[]{obj.getEmployeeCode(), obj.getName()};
+                model.addRow(value);
+            }
+        }
     }
 
     private void initi() {
@@ -130,7 +150,6 @@ public class EmployeeInfoEditA extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
@@ -150,6 +169,7 @@ public class EmployeeInfoEditA extends javax.swing.JFrame {
         jTextField22 = new javax.swing.JTextField();
         jTextField23 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel28 = new javax.swing.JLabel();
         jTextField17 = new javax.swing.JTextField();
@@ -203,8 +223,6 @@ public class EmployeeInfoEditA extends javax.swing.JFrame {
         jLabel17.setText("給与形態");
 
         jLabel18.setText("職種");
-
-        jLabel20.setText("所属部署");
 
         jLabel22.setText("健康保険番号");
 
@@ -277,6 +295,13 @@ public class EmployeeInfoEditA extends javax.swing.JFrame {
             }
         });
 
+        jButton4.setText("編集");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -334,8 +359,7 @@ public class EmployeeInfoEditA extends javax.swing.JFrame {
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel17)
                                     .addComponent(jLabel16)
-                                    .addComponent(jLabel18)
-                                    .addComponent(jLabel20))
+                                    .addComponent(jLabel18))
                                 .addGap(40, 40, 40)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jTextField13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
@@ -362,6 +386,8 @@ public class EmployeeInfoEditA extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton4)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton1)))
                 .addGap(284, 284, 284))
         );
@@ -392,8 +418,7 @@ public class EmployeeInfoEditA extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jLabel20))
+                    .addComponent(jRadioButton2))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
@@ -439,11 +464,19 @@ public class EmployeeInfoEditA extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton4))
                 .addContainerGap())
         );
 
         jLabel28.setText("従業員一覧");
+
+        jTextField17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField17ActionPerformed(evt);
+            }
+        });
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -453,6 +486,11 @@ public class EmployeeInfoEditA extends javax.swing.JFrame {
                 "従業員コード", "名前"
             }
         ));
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable2);
 
         jButton3.setText("検索");
@@ -526,7 +564,7 @@ public class EmployeeInfoEditA extends javax.swing.JFrame {
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 53, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 649, Short.MAX_VALUE)
                         .addContainerGap())))
         );
 
@@ -676,6 +714,8 @@ public class EmployeeInfoEditA extends javax.swing.JFrame {
 
         String serch = jTextField17.getText();
 
+        updateJTable(serch);
+
         employeeObj.setSerch(serch);
 
         EmployeeInfoService employeeInfoService = new EmployeeInfoService();
@@ -687,6 +727,135 @@ public class EmployeeInfoEditA extends javax.swing.JFrame {
             Logger.getLogger(EmployeeInfoEditA.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTextField17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField17ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField17ActionPerformed
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        // TODO add your handling code here:
+
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        int row = jTable2.getSelectedRow();
+        int col = jTable2.getSelectedColumn();
+
+        String employeeCode = (String) model.getValueAt(row, col);
+        EmployeeInfoService employeeInfoService = new EmployeeInfoService();
+
+        EmployeeObj obj = employeeInfoService.getEmployeeInfo(employeeCode);
+
+        jTextField1.setText(obj.getEmployeeCode());
+        jTextField4.setText(obj.getName());
+        jTextField5.setText(obj.getKatakana());
+        jTextField7.setText(obj.getBirth());
+        jTextField6.setText(obj.getPhoneNumber());
+        jTextField8.setText(obj.getEmail());
+        jTextField9.setText(obj.getDateOfJoining());
+        jTextField10.setText(obj.getDateOfResignation());
+        jTextField11.setText(obj.getPostalCode());
+        jTextField14.setText(obj.getAddress());
+        jTextField12.setText(obj.getNationality());
+        jTextField15.setText(obj.getContractType());
+        jTextField13.setText(obj.getSalaryType());
+        jTextField16.setText(obj.getJobTitle());
+        jTextField20.setText(obj.getHealthInsuranceNumber());
+        jTextField19.setText(obj.getLaborInsuranceNumber());
+        jTextField22.setText(obj.getResidenceCardNumber());
+        jTextField21.setText(obj.getPeriodOfStay());
+        jTextField23.setText(obj.getResidenceStatus());
+
+
+    }//GEN-LAST:event_jTable2MouseClicked
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+
+        EmployeeObj employeeObj = new EmployeeObj();
+
+        if (jTextField1.getText() != null && !jTextField1.getText().equals("")) {
+            employeeObj.setEmployeeCode(jTextField1.getText());
+        } else {
+            JOptionPane.showMessageDialog(this, "有効な入力を提供してください", "エラー", JOptionPane.ERROR_MESSAGE);
+
+        }
+
+        if (jTextField21.getText() != null && !jTextField21.getText().equals("")) {
+            employeeObj.setPeriodOfStay(jTextField21.getText());
+        }
+
+        String employeeCode = jTextField1.getText();
+        String name = jTextField4.getText();
+        String katakana = jTextField5.getText();
+        String birth = jTextField7.getText();
+        String phoneNumber = jTextField6.getText();
+        String email = jTextField8.getText();
+        String dateOfJoining = jTextField9.getText();
+        String dateOfResignation = jTextField10.getText();
+        String postalCode = jTextField11.getText();
+        String address = jTextField14.getText();
+        String nationality = jTextField12.getText();
+        String contractType = jTextField15.getText();
+        String salaryType = jTextField13.getText();
+        String jobTitle = jTextField16.getText();
+        String healthInsuranceNumber = jTextField20.getText();
+        String laborInsuranceNumber = jTextField19.getText();
+        String residenceCardNumber = jTextField22.getText();
+        String periodOfStay = jTextField21.getText();
+        String residenceStatus = jTextField23.getText();
+        String gender;
+        if (jRadioButton1.isSelected()) {
+            gender = "0";
+        } else {
+            gender = "1";
+        }
+
+        employeeObj.setEmployeeCode(employeeCode);
+        employeeObj.setName(name);
+        employeeObj.setKatakana(katakana);
+        employeeObj.setGender(gender);
+        employeeObj.setBirth(birth);
+        employeeObj.setPhoneNumber(phoneNumber);
+        employeeObj.setEmail(email);
+        employeeObj.setDateOfJoining(dateOfJoining);
+        employeeObj.setDateOfResignation(dateOfResignation);
+        employeeObj.setPostalCode(postalCode);
+        employeeObj.setAddress(address);
+        employeeObj.setNationality(nationality);
+        employeeObj.setContractType(contractType);
+        employeeObj.setSalaryType(salaryType);
+        employeeObj.setJobTitle(jobTitle);
+        employeeObj.setHealthInsuranceNumber(healthInsuranceNumber);
+        employeeObj.setLaborInsuranceNumber(laborInsuranceNumber);
+        employeeObj.setResidenceCardNumber(residenceCardNumber);
+        employeeObj.setPeriodOfStay(periodOfStay);
+        employeeObj.setResidenceStatus(residenceStatus);
+
+        EmployeeInfoService employeeInfoService = new EmployeeInfoService();
+        employeeInfoService.updateEmployeeInfo(employeeObj);
+
+//       System.out.println(employeeCode + name + katakana + birth + phoneNumber + email + dateOfJoining + dateOfResignation + postalCode + address + nationality + contractType + salaryType + jobTitle + healthInsuranceNumber + laborInsuranceNumber + residenceCardNumber + periodOfStay + residenceStatus);
+//     String value = employeeCode + "," + name + "," + katakana + "," + birth + "," + phoneNumber + "," + email + "," + dateOfJoining + "," + dateOfResignation + "," + postalCode + "," + address + "," + nationality + "," + contractType + "," + salaryType + "," + jobTitle + "," + healthInsuranceNumber + "," + laborInsuranceNumber + "," + residenceCardNumber + "," + periodOfStay + "," + residenceStatus;
+        //      File file = new File("C:\\Users\\user\\Desktop\\contact.csv");
+//       try {
+        // ファイルを追記モードで開く
+//           FileWriter fileWriter = new FileWriter(file, true);
+//          PrintWriter printWriter = new PrintWriter(fileWriter);
+        // 既存の内容を保持したまま新しい行を追加
+//          printWriter.println(value);
+        // ファイルを閉じる
+//        printWriter.close();
+//          System.out.println("保存しました。");
+//    } catch (IOException ex) {
+//          Logger.getLogger(EmployeeInfoEditA.class.getName()).log(Level.SEVERE, null, ex);
+//      }
+        // DB登録
+        //（是指将数据存储到数据库中。这通常涉及使用 SQL 语句
+        // TODO add your handling code here:
+        //        setSize(300, 150);
+        //        setDefaultCloseOperation(EmployeeInfoEditA.EXIT_ON_CLOSE);
+        //        setLocationRelativeTo(null);
+
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -728,6 +897,7 @@ public class EmployeeInfoEditA extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -738,7 +908,6 @@ public class EmployeeInfoEditA extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
