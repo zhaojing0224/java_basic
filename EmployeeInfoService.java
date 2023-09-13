@@ -37,9 +37,30 @@ public class EmployeeInfoService {
 
         EmployeeInfoDao employeeInfoDao = new EmployeeInfoDao();
 
-        List<EmployeeObj> employeeObjList = employeeInfoDao.getEmployeeInfo();
-        
+        List<EmployeeObj> employeeObjList = employeeInfoDao.getEmployeeInfoList();
+
         return employeeObjList;
+    }
+
+    public EmployeeObj getEmployeeInfo(String emCode) {
+
+        EmployeeInfoDao employeeInfoDao = new EmployeeInfoDao();
+
+        EmployeeObj employeeObj = employeeInfoDao.getEmployeeInfo(emCode);
+
+        return employeeObj;
+    }
+    
+    /**
+     * 従業員情報編集
+     * @param employeeObj 
+     */
+    public void updateEmployeeInfo(EmployeeObj employeeObj) {
+
+        EmployeeInfoDao employeeInfoDao = new EmployeeInfoDao();
+
+        employeeInfoDao.updateEmployeeInfo(employeeObj);
+
     }
 
 }
