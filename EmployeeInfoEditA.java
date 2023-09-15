@@ -40,8 +40,9 @@ public class EmployeeInfoEditA extends javax.swing.JFrame {
      */
     public EmployeeInfoEditA() {
         initComponents();
-        initi();
+        //addActionListener();
         init();
+        //updateButtonPopupWindow();
     }
 
     /**
@@ -64,18 +65,18 @@ public class EmployeeInfoEditA extends javax.swing.JFrame {
         }
     }
 
-    private void employeeList() {
-        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
-        model.setRowCount(0); // 清空表格内容，以便填充新的数据
-
-        Connection conn = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-    }
-
+// 没用上
+//   private void employeeList() {
+//         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+//         model.setRowCount(0); // 清空表格内容，以便填充新的数据
+// 
+//         Connection conn = null;
+//         PreparedStatement preparedStatement = null;
+//         ResultSet resultSet = null;
+//     }
     private void updateJTable(String searchText) {
 
-        String serch = jTextField17.getText();
+        String search = jTextField17.getText();
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         model.setRowCount(0); // 清空表格内容
 
@@ -91,7 +92,10 @@ public class EmployeeInfoEditA extends javax.swing.JFrame {
         }
     }
 
-    private void initi() {
+    /**
+     * addActionListener
+     */
+    private void addActionListener() {
         // 初始化组件，包括 jButton1
         // 其他初始化逻辑...
 
@@ -100,6 +104,33 @@ public class EmployeeInfoEditA extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 // 弹出消息框显示 "已保存"
                 int choice = JOptionPane.showConfirmDialog(EmployeeInfoEditA.this, "保存されました", "確認", JOptionPane.OK_CANCEL_OPTION);
+
+              if (choice == JOptionPane.OK_OPTION) {
+                    new EmployeeInfoEditA().setVisible(true);
+                    dispose();
+                    // 如果用户点击了确认按钮，可以在这里执行返回 EmployeeInfoEditA 页面的操作
+                    // 例如，你可以在这里添加返回逻辑
+                } else if (choice == JOptionPane.CANCEL_OPTION) {
+                    // 如果用户点击了取消按钮，可以在这里执行返回 EmployeeInfoEditA 页面的操作
+                    new EmployeeInfoEditA().setVisible(true);
+                    dispose();
+                }
+            }
+        });
+    }
+
+    /**
+     * updateButtonPopupWindow
+     */
+    private void updateButtonPopupWindow() {
+        // 初始化组件，包括 jButton1
+        // 其他初始化逻辑...
+
+        jButton4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // 弹出消息框显示 "已編集"
+                int choice = JOptionPane.showConfirmDialog(EmployeeInfoEditA.this, "編集されました", "確認", JOptionPane.OK_CANCEL_OPTION);
 
                 if (choice == JOptionPane.OK_OPTION) {
                     new EmployeeInfoEditA().setVisible(true);
@@ -176,6 +207,7 @@ public class EmployeeInfoEditA extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -198,6 +230,11 @@ public class EmployeeInfoEditA extends javax.swing.JFrame {
 
         buttonGroup1.add(jRadioButton1);
         jRadioButton1.setText("女性");
+        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton1ActionPerformed(evt);
+            }
+        });
 
         buttonGroup1.add(jRadioButton2);
         jRadioButton2.setText("男性");
@@ -500,6 +537,13 @@ public class EmployeeInfoEditA extends javax.swing.JFrame {
             }
         });
 
+        jButton5.setText("削除");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -512,7 +556,8 @@ public class EmployeeInfoEditA extends javax.swing.JFrame {
                             .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jTextField17, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                            .addComponent(jButton5))
                         .addContainerGap(28, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel28)
@@ -528,8 +573,10 @@ public class EmployeeInfoEditA extends javax.swing.JFrame {
                 .addGap(9, 9, 9)
                 .addComponent(jLabel28)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 489, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(322, 322, 322))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 466, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton5)
+                .addGap(306, 306, 306))
         );
 
         jButton2.setText("戻る");
@@ -698,6 +745,7 @@ public class EmployeeInfoEditA extends javax.swing.JFrame {
         setDefaultCloseOperation(EmployeeInfoEditA.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -712,11 +760,11 @@ public class EmployeeInfoEditA extends javax.swing.JFrame {
 
         EmployeeObj employeeObj = new EmployeeObj();
 
-        String serch = jTextField17.getText();
+        String search = jTextField17.getText();
 
-        updateJTable(serch);
+        updateJTable(search);
 
-        employeeObj.setSerch(serch);
+        employeeObj.setSerch(search);
 
         EmployeeInfoService employeeInfoService = new EmployeeInfoService();
         try {
@@ -857,6 +905,24 @@ public class EmployeeInfoEditA extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        int row = jTable2.getSelectedRow();
+        int col = jTable2.getSelectedColumn();
+
+        String employeeCode = (String) model.getValueAt(row, col);
+
+        EmployeeInfoService employeeInfoService = new EmployeeInfoService();
+        employeeInfoService.deleteEmployeeInfo(employeeCode);
+
+
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -898,6 +964,7 @@ public class EmployeeInfoEditA extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
