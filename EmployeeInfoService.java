@@ -50,10 +50,11 @@ public class EmployeeInfoService {
 
         return employeeObj;
     }
-    
+
     /**
      * 従業員情報編集
-     * @param employeeObj 
+     *
+     * @param employeeObj
      */
     public void updateEmployeeInfo(EmployeeObj employeeObj) {
 
@@ -63,4 +64,10 @@ public class EmployeeInfoService {
 
     }
 
+     public void deleteEmployeeInfo(String employeeCode) {
+
+        EmployeeInfoDao employeeInfoDao = new EmployeeInfoDao();
+
+        employeeInfoDao.deleteEmployeeInfo(employeeCode);
+    }
 }
