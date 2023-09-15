@@ -115,7 +115,7 @@ public class EmployeeInfoDao {
             // String sql = "INSERT INTO EmployeeInfoDao (Name, Katakana, Gender, Birth, Phone_Number, Email, Date_of_Joining, Date_of_Resignation, Postal_Code, Address, Nationality, Contract_Type, Salary_Type, Job_Title, Office_Location, Position, Health_Insurance_Number, Labor_Insurance_Number, Period_of_Stay, Residence_Status, Deletion_Flag, Creation_Date, Update_Date) VALUES"
             //       + "(jTextField1', 'jTextField4', 'jTextField5', 'jTextField6', 'jTextField2', 'jTextField7', 'jTextField8', 'jTextField9', 'jTextField10', 'jTextField11', 'jTextField13', 'jTextField14', 'jTextField15', 'jTextField16', 'jTextField19', 'jTextField20', 'jTextField21', 'jTextField22', 'jTextField23', 'jTextField24');";
             StringBuffer sb = new StringBuffer();
-            
+
             sb.append("UPDATE employeeInfo SET ");
             sb.append("name = '" + employeeObj.getName() + "', ");
             sb.append("katakana = '" + employeeObj.getKatakana() + "', ");
@@ -335,6 +335,52 @@ public class EmployeeInfoDao {
             Logger.getLogger(ConnJdbc.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public void deleteEmployeeInfo(String employeeCode) {
+
+        String jdbcUrl = "jdbc:postgresql://localhost:5432/zhao";
+        String username = "postgres";
+        String password = "postgres";
+
+        // 获取当前系统时间
+        LocalDateTime currentTime = LocalDateTime.now();
+
+        try {
+            // 1. 注册 PostgreSQL 驱动程序
+            Class.forName("org.postgresql.Driver");
+            // 2. 建立数据库连接
+            Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
+            // 3. 创建 SQL 语句
+            // String sql = "INSERT INTO EmployeeInfoDao (Name, Katakana, Gender, Birth, Phone_Number, Email, Date_of_Joining, Date_of_Resignation, Postal_Code, Address, Nationality, Contract_Type, Salary_Type, Job_Title, Office_Location, Position, Health_Insurance_Number, Labor_Insurance_Number, Period_of_Stay, Residence_Status, Deletion_Flag, Creation_Date, Update_Date) VALUES"
+            //       + "(jTextField1', 'jTextField4', 'jTextField5', 'jTextField6', 'jTextField2', 'jTextField7', 'jTextField8', 'jTextField9', 'jTextField10', 'jTextField11', 'jTextField13', 'jTextField14', 'jTextField15', 'jTextField16', 'jTextField19', 'jTextField20', 'jTextField21', 'jTextField22', 'jTextField23', 'jTextField24');";
+
+            List<String> list = new ArrayList<String>();
+            String sqlx = "DELETE FROM employeeInfo WHERE employee_code = ?";
+            String sqly = "DELETE FROM employeeInfo WHERE employee_code = ?";
+            list.add(sqlx);
+            list.add(sqly);
+
+            for (String str : list) {
+
+                // 4. 创建 PreparedStatement 对象
+                PreparedStatement preparedStatement = connection.prepareStatement(str);
+                preparedStatement.setString(1, employeeCode);
+
+                // 5. 执行删除操作
+                int rowCount = preparedStatement.executeUpdate();
+                // 6. 关闭资源
+                preparedStatement.close();
+            }
+
+            connection.close();
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ConnJdbc.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnJdbc.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     public EmployeeObj getEmployeeInfo(String emCode) {
