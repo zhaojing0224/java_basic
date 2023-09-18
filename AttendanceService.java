@@ -34,7 +34,7 @@ public class AttendanceService {
     }
 
     public List<AttendanceObj> getAttendanceList() {
-       
+
         AttendanceDao attendanceDao = new AttendanceDao();
 
         List<AttendanceObj> attendanceObjList = attendanceDao.getAttendanceList();
@@ -42,13 +42,21 @@ public class AttendanceService {
         return attendanceObjList;
     }
 
-    public AttendanceObj getAttendance(String emCode) {
+    public AttendanceObj getAttendance(String emCode, String yMonth) {
 
         AttendanceDao attendanceDao = new AttendanceDao();
 
-        AttendanceObj attendanceObj = attendanceDao.getAttendance(emCode);
+        AttendanceObj attendanceObj = attendanceDao.getAttendance(emCode, yMonth);
 
         return attendanceObj;
+    }
+
+    public void updateAttendance(AttendanceObj attendanceObj) {
+
+        AttendanceDao attendanceDao = new AttendanceDao();
+
+        attendanceDao.updateAttendance(attendanceObj);
+
     }
 
 }
