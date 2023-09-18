@@ -71,7 +71,7 @@ public class EmployeeObj {
     private String residenceStatus;
 
     // 検索
-    private String Serch;
+    private String Search;
 
     public String getEmployeeCode() {
         return employeeCode;
@@ -233,12 +233,12 @@ public class EmployeeObj {
         this.residenceStatus = residenceStatus;
     }
 
-    public String getSerch() {
-        return Serch;
+    public String getSearch() {
+        return Search;
     }
 
-    public void setSerch(String Serch) {
-        this.Serch = Serch;
+    public void setSearch(String Search) {
+        this.Search = Search;
     }
 
 }
