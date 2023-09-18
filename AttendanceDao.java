@@ -18,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.PreparedStatement;
 import static java.util.Collections.list;
+
 /**
  *
  * @author user
@@ -44,7 +45,7 @@ public class AttendanceDao {
             // String sql = "INSERT INTO EmployeeInfoDao (Name, Katakana, Gender, Birth, Phone_Number, Email, Date_of_Joining, Date_of_Resignation, Postal_Code, Address, Nationality, Contract_Type, Salary_Type, Job_Title, Office_Location, Position, Health_Insurance_Number, Labor_Insurance_Number, Period_of_Stay, Residence_Status, Deletion_Flag, Creation_Date, Update_Date) VALUES"
             //       + "(jTextField1', 'jTextField4', 'jTextField5', 'jTextField6', 'jTextField2', 'jTextField7', 'jTextField8', 'jTextField9', 'jTextField10', 'jTextField11', 'jTextField13', 'jTextField14', 'jTextField15', 'jTextField16', 'jTextField19', 'jTextField20', 'jTextField21', 'jTextField22', 'jTextField23', 'jTextField24');";
             StringBuffer sb = new StringBuffer();
-            sb.append("INSERT INTO attendance (employee_code, name, year_month, month_attendance_days, actual_attendance_days, monthly_working_hours, actual_working_hours, absent_ays, holiday_work_days, holiday_working_hours, weekday_overtime, late_night_overtime, tardiness_and_early_departure, remaining_paid_leave_days, consumed_paid_leave_days,remarks) VALUES(");
+            sb.append("INSERT INTO attendance (employee_code, name, year_month, month_attendance_days, actual_attendance_days, monthly_working_hours, actual_working_hours, absent_ays, holiday_work_days, holiday_working_hours, weekday_overtime, late_night_overtime, tardiness_and_early_departure, remaining_paid_leave_days, consumed_paid_leave_days,remarks, deletion_flag, creation_date, update_date) VALUES(");
 
             sb.append("'" + attendanceObj.getEmployeeCode() + "',");
             sb.append("'" + attendanceObj.getName() + "',");
@@ -86,9 +87,72 @@ public class AttendanceDao {
 
     }
 
+    public void updateAttendance(AttendanceObj attendanceObj) {
+
+        System.out.println("5555?");
+        String jdbcUrl = "jdbc:postgresql://localhost:5432/zhao";
+        String username = "postgres";
+        String password = "postgres";
+
+        // 获取当前系统时间
+        LocalDateTime currentTime = LocalDateTime.now();
+
+        try {
+            // 1. 注册 PostgreSQL 驱动程序
+            Class.forName("org.postgresql.Driver");
+            // 2. 建立数据库连接
+            Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
+
+            // 3. 创建 SQL 语句
+            // String sql = "INSERT INTO EmployeeInfoDao (Name, Katakana, Gender, Birth, Phone_Number, Email, Date_of_Joining, Date_of_Resignation, Postal_Code, Address, Nationality, Contract_Type, Salary_Type, Job_Title, Office_Location, Position, Health_Insurance_Number, Labor_Insurance_Number, Period_of_Stay, Residence_Status, Deletion_Flag, Creation_Date, Update_Date) VALUES"
+            //       + "(jTextField1', 'jTextField4', 'jTextField5', 'jTextField6', 'jTextField2', 'jTextField7', 'jTextField8', 'jTextField9', 'jTextField10', 'jTextField11', 'jTextField13', 'jTextField14', 'jTextField15', 'jTextField16', 'jTextField19', 'jTextField20', 'jTextField21', 'jTextField22', 'jTextField23', 'jTextField24');";
+            StringBuffer sb = new StringBuffer();
+
+            sb.append("UPDATE attendance SET ");
+//            sb.append("employee_code = '" + attendanceObj.getEmployeeCode() + "',");
+//            sb.append("name = '" + attendanceObj.getName() + "',");
+//            sb.append("year_month = '" + attendanceObj.getYearMonth() + "',");
+            sb.append("month_attendance_days = '" + attendanceObj.getMonthAttendanceDays() + "',");
+            sb.append("actual_attendance_days = '" + attendanceObj.getActualAttendanceDays() + "',");
+            sb.append("monthly_working_hours = '" + attendanceObj.getMonthlyWorkingHours() + "',");
+            sb.append("actual_working_hours = '" + attendanceObj.getActualWorkingHours() + "',");
+            sb.append("absent_ays = '" + attendanceObj.getAbsentAys() + "',");
+            sb.append("holiday_work_days = '" + attendanceObj.getHolidayWorkDays() + "',");
+            sb.append("holiday_working_hours = '" + attendanceObj.getHolidayWorkingHours() + "',");
+            sb.append("weekday_overtime = '" + attendanceObj.getWeekdayOvertime() + "',");
+            sb.append("late_night_overtime = '" + attendanceObj.getLateNightOvertime() + "',");
+            sb.append("tardiness_and_early_departure = '" + attendanceObj.getTardinessAndEarlyDeparture() + "',");
+            sb.append("remaining_paid_leave_days = '" + attendanceObj.getRemainingPaidLeaveDays() + "',");
+            sb.append("consumed_paid_leave_days = '" + attendanceObj.getConsumedPaidLeaveDays() + "',");
+            sb.append("remarks = '" + attendanceObj.getRemarks() + "'");
+            sb.append("WHERE employee_code = '" + attendanceObj.getEmployeeCode() + "'");
+//            sb.append("'" + 0 + "',");
+//            sb.append("'" + currentTime + "',");
+//            sb.append("'" + currentTime + "');");
+
+            System.out.println(sb.toString());
+
+            // 4. 创建 Statement 对象
+            Statement statement = connection.createStatement();
+
+            // 5. 执行查询并获取结果集
+            statement.executeUpdate(sb.toString());
+
+            // 7. 关闭资源
+            statement.close();
+            connection.close();
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ConnJdbc.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnJdbc.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     public List<AttendanceObj> getAttendanceList() {
 
-        System.out.println("ccccccc");
+        System.out.println("bbbb");
         List<AttendanceObj> list = new ArrayList<AttendanceObj>();
 
         String jdbcUrl = "jdbc:postgresql://localhost:5432/zhao";
@@ -128,6 +192,7 @@ public class AttendanceDao {
                 String remainingPaidLeaveDays = resultSet.getString("remaining_paid_leave_days");
                 String consumedPaidLeaveDays = resultSet.getString("consumed_paid_leave_days");
                 String remarks = resultSet.getString("remarks");
+                String yearMonth = resultSet.getString("year_month");
 
                 AttendanceObj obj = new AttendanceObj();
                 obj.setEmployeeCode(employeeCode);
@@ -145,6 +210,7 @@ public class AttendanceDao {
                 obj.setRemainingPaidLeaveDays(remainingPaidLeaveDays);
                 obj.setConsumedPaidLeaveDays(consumedPaidLeaveDays);
                 obj.setRemarks(remarks);
+                obj.setYearMonth(yearMonth);
 
                 list.add(obj);
 
@@ -164,7 +230,7 @@ public class AttendanceDao {
 
     public List<AttendanceObj> setAttendanceList() throws SQLException {
 
-        System.out.println("aaaaa");
+        System.out.println("dddd");
 
         List<AttendanceObj> list = new ArrayList<AttendanceObj>();
 
@@ -211,7 +277,7 @@ public class AttendanceDao {
         return list;
     }
 
-    public AttendanceObj getAttendance(String emCode) {
+    public AttendanceObj getAttendance(String emCode, String yMonth) {
 
         System.out.println("6666?");
         AttendanceObj obj = new AttendanceObj();
@@ -227,8 +293,11 @@ public class AttendanceDao {
             Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
 
             // 3. 创建 SQL 语句
-            String sql = "select * from Attendance where employee_code = '" + emCode + "';";
+            String sql = "select * from Attendance where employee_code = '" + emCode + "'" + "and year_month = " + "'" + yMonth + "';";
 
+            System.out.println("emCode: " + emCode);
+            System.out.println("yearMonth: " + yMonth);
+            System.out.println("SQL" + sql);
             // 4. 创建 Statement 对象
             Statement statement = connection.createStatement();
 
@@ -253,6 +322,8 @@ public class AttendanceDao {
                 String remainingPaidLeaveDays = resultSet.getString("remaining_paid_leave_days");
                 String consumedPaidLeaveDays = resultSet.getString("consumed_paid_leave_days");
                 String remarks = resultSet.getString("remarks");
+                String yearMonth = resultSet.getString("year_month");
+                
 
                 obj.setEmployeeCode(employeeCode);
                 obj.setName(name);
@@ -269,6 +340,7 @@ public class AttendanceDao {
                 obj.setRemainingPaidLeaveDays(remainingPaidLeaveDays);
                 obj.setConsumedPaidLeaveDays(consumedPaidLeaveDays);
                 obj.setRemarks(remarks);
+                obj.setYearMonth(yearMonth);
 
             }
 
