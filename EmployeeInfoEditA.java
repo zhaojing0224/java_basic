@@ -325,7 +325,7 @@ public class EmployeeInfoEditA extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("保存");
+        jButton1.setText("新規登録");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -764,7 +764,7 @@ public class EmployeeInfoEditA extends javax.swing.JFrame {
 
         updateJTable(search);
 
-        employeeObj.setSerch(search);
+        employeeObj.setSearch(search);
 
         EmployeeInfoService employeeInfoService = new EmployeeInfoService();
         try {

@@ -8,6 +8,7 @@ package hrsys.controller;
 import com.sun.xml.internal.ws.util.StringUtils;
 import hrsys.dao.AttendanceDao;
 import hrsys.obj.AttendanceObj;
+import hrsys.obj.EmployeeObj;
 import hrsys.service.AttendanceService;
 import hrsys.service.EmployeeInfoService;
 import java.awt.event.ActionEvent;
@@ -37,14 +38,14 @@ public class Attendance extends javax.swing.JFrame {
 
     public void init() {
 
-        AttendanceService attendanceService = new AttendanceService();
+        EmployeeInfoService employeeInfoService = new EmployeeInfoService();
 
-        List<AttendanceObj> list = attendanceService.getAttendanceList();
+        List<EmployeeObj> list = employeeInfoService.getEmployeeInfoList();
 
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         model.setRowCount(0);
 
-        for (AttendanceObj obj : list) {
+        for (EmployeeObj obj : list) {
             String[] value = new String[]{obj.getEmployeeCode(), obj.getName()};
             model.addRow(value);
             System.out.println(obj.getName());
@@ -58,11 +59,11 @@ public class Attendance extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         model.setRowCount(0); // 清空表格内容
 
-        AttendanceService attendanceService = new AttendanceService();
+        EmployeeInfoService employeeInfoService = new EmployeeInfoService();
 
-        List<AttendanceObj> list = attendanceService.getAttendanceList();
+        List<EmployeeObj> list = employeeInfoService.getEmployeeInfoList();
 
-        for (AttendanceObj obj : list) {
+        for (EmployeeObj obj : list) {
             if (obj.getEmployeeCode().equals(searchText) || obj.getName().equals(searchText)) {
                 String[] value = new String[]{obj.getEmployeeCode(), obj.getName()};
                 model.addRow(value);
@@ -143,11 +144,16 @@ public class Attendance extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
         jLabel17 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jTextField17 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jComboBox3 = new javax.swing.JComboBox<>();
+        jLabel18 = new javax.swing.JLabel();
+        jComboBox4 = new javax.swing.JComboBox<>();
+        jLabel19 = new javax.swing.JLabel();
 
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
@@ -185,7 +191,7 @@ public class Attendance extends javax.swing.JFrame {
 
         jLabel15.setText("名前");
 
-        jButton1.setText("保存");
+        jButton1.setText("新規登録");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -207,6 +213,13 @@ public class Attendance extends javax.swing.JFrame {
         });
 
         jLabel17.setText("月");
+
+        jButton5.setText("編集");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -288,6 +301,8 @@ public class Attendance extends javax.swing.JFrame {
                         .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton5)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton1)))
                 .addContainerGap())
         );
@@ -361,7 +376,9 @@ public class Attendance extends javax.swing.JFrame {
                     .addComponent(jLabel14)
                     .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(56, Short.MAX_VALUE))
         );
 
@@ -373,6 +390,11 @@ public class Attendance extends javax.swing.JFrame {
                 "従業員コード", "名前"
             }
         ));
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable2);
 
         jTextField17.addActionListener(new java.awt.event.ActionListener() {
@@ -389,6 +411,27 @@ public class Attendance extends javax.swing.JFrame {
         });
 
         jButton3.setText("戻る");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox3ActionPerformed(evt);
+            }
+        });
+
+        jLabel18.setText("年");
+
+        jComboBox4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox4ActionPerformed(evt);
+            }
+        });
+
+        jLabel19.setText("月");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -398,32 +441,46 @@ public class Attendance extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(40, 40, 40)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2)))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel19)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton2))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jButton3)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41))
+                .addGap(35, 35, 35))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton3)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16)
-                        .addComponent(jButton2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 571, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jButton3)
+                .addGap(18, 18, 18)
+                .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel18)
+                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel19))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 571, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 20, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -439,15 +496,18 @@ public class Attendance extends javax.swing.JFrame {
 
         // 清空现有的 ComboBox 内容
         jComboBox1.removeAllItems();
+        jComboBox3.removeAllItems();
 
         // 向 ComboBox 中添加年份选项
         for (int year = currentYear; year >= startYear; year--) {
             jComboBox1.addItem(String.valueOf(year));
+            jComboBox3.addItem(String.valueOf(year));
         }
 
         for (int i = 1; i < 13; i++) {
 
             jComboBox2.addItem(String.valueOf(i));
+            jComboBox4.addItem(String.valueOf(i));
         }
 
     }
@@ -476,7 +536,7 @@ public class Attendance extends javax.swing.JFrame {
         String remarks = jTextField13.getText();
         String selectedYear = (String) jComboBox1.getSelectedItem();
         String selectedMonth = (String) jComboBox2.getSelectedItem();
-        String yearMonth = selectedYear + "年" + selectedMonth + "月";
+        String yearMonth = selectedYear + selectedMonth;
 
         attendanceObj.setEmployeeCode(employeeCode);
         attendanceObj.setName(name);
@@ -496,7 +556,11 @@ public class Attendance extends javax.swing.JFrame {
         attendanceObj.setYearMonth(yearMonth);
 
         AttendanceService attendanceService = new AttendanceService();
-        attendanceService.addAttendance(attendanceObj);
+        try {
+            attendanceService.addAttendance(attendanceObj);
+        } catch (SQLException ex) {
+            Logger.getLogger(Attendance.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         setSize(300, 150);
         setDefaultCloseOperation(EmployeeInfoEditA.EXIT_ON_CLOSE);
@@ -507,11 +571,13 @@ public class Attendance extends javax.swing.JFrame {
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         String selectedMonth = (String) jComboBox2.getSelectedItem();
+        System.out.println("Selected Year: " + selectedMonth);
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         String selectedYear = (String) jComboBox1.getSelectedItem();
+        System.out.println("Selected Year: " + selectedYear);
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
@@ -522,36 +588,161 @@ public class Attendance extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
 
+//        EmployeeObj employeeObj = new EmployeeObj();
         AttendanceObj attendanceObj = new AttendanceObj();
 
-        String search = jTextField17.getText();
+        String year = (String) jComboBox3.getSelectedItem();
+        String month = (String) jComboBox4.getSelectedItem();
+        String searchYearMonth = year + month;
 
-        updateJTable(search);
+        // 根据用户选择的搜索条件来决定使用哪一个
+        String searchText = jTextField17.getText();
+        if (searchText.isEmpty()) {
+//            updateJTable(searchYearMonth);
+            attendanceObj.setSearch(searchYearMonth);
+            AttendanceService attendanceService = new AttendanceService();
+            jTextField14.setText(null);
+            jTextField15.setText(null);
+            jTextField1.setText(null);
+            jTextField2.setText(null);
+            jTextField3.setText(null);
+            jTextField4.setText(null);
+            jTextField5.setText(null);
+            jTextField6.setText(null);
+            jTextField7.setText(null);
+            jTextField8.setText(null);
+            jTextField10.setText(null);
+            jTextField11.setText(null);
+            jTextField12.setText(null);
+            jTextField9.setText(null);
+            jTextField13.setText(null);
+            try {
+                attendanceService.setAttendance(attendanceObj);
+            } catch (SQLException ex) {
+                Logger.getLogger(Attendance.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
-        attendanceObj.setSerch(search);
+        } else {
+            updateJTable(searchText);
+            EmployeeObj employeeObj = new EmployeeObj();
+            employeeObj.setSearch(searchText);
 
-        AttendanceService attendanceService = new AttendanceService();
-        try {
-            attendanceService.setAttendance(attendanceObj);
+            EmployeeInfoService employeeInfoService = new EmployeeInfoService();
+            try {
+                employeeInfoService.setEmployeeInfo(employeeObj);
 
-            // TODO add your handling code here:
-        } catch (SQLException ex) {
-            Logger.getLogger(EmployeeInfoEditA.class.getName()).log(Level.SEVERE, null, ex);
+                // TODO add your handling code here
+            } catch (SQLException ex) {
+                Logger.getLogger(EmployeeInfoEditA.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+
+        new MainForm().setVisible(true);
+        this.dispose();
+
+
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+
+        AttendanceObj attendanceObj = new AttendanceObj();
+
+        String employeeCode = jTextField14.getText();
+        String name = jTextField15.getText();
+        String monthAttendanceDays = jTextField1.getText();
+        String actualAttendanceDays = jTextField2.getText();
+        String monthlyWorkingHours = jTextField3.getText();
+        String actualWorkingHours = jTextField4.getText();
+        String absentAys = jTextField5.getText();
+        String holidayWorkDays = jTextField6.getText();
+        String holidayWorkingHours = jTextField7.getText();
+        String weekdayOvertime = jTextField8.getText();
+        String lateNightOvertime = jTextField9.getText();
+        String tardinessAndEarlyDeparture = jTextField10.getText();
+        String remainingPaidLeaveDays = jTextField11.getText();
+        String consumedPaidLeaveDays = jTextField12.getText();
+        String remarks = jTextField13.getText();
+        String selectedYear = (String) jComboBox1.getSelectedItem();
+        String selectedMonth = (String) jComboBox2.getSelectedItem();
+        String yearMonth = selectedYear + selectedMonth;
+
+        attendanceObj.setEmployeeCode(employeeCode);
+        attendanceObj.setName(name);
+        attendanceObj.setMonthAttendanceDays(monthAttendanceDays);
+        attendanceObj.setActualAttendanceDays(actualAttendanceDays);
+        attendanceObj.setMonthlyWorkingHours(monthlyWorkingHours);
+        attendanceObj.setActualWorkingHours(actualWorkingHours);
+        attendanceObj.setAbsentAys(absentAys);
+        attendanceObj.setHolidayWorkDays(holidayWorkDays);
+        attendanceObj.setHolidayWorkingHours(holidayWorkingHours);
+        attendanceObj.setWeekdayOvertime(weekdayOvertime);
+        attendanceObj.setLateNightOvertime(lateNightOvertime);
+        attendanceObj.setTardinessAndEarlyDeparture(tardinessAndEarlyDeparture);
+        attendanceObj.setRemainingPaidLeaveDays(remainingPaidLeaveDays);
+        attendanceObj.setConsumedPaidLeaveDays(consumedPaidLeaveDays);
+        attendanceObj.setRemarks(remarks);
+        attendanceObj.setYearMonth(yearMonth);
+
+        AttendanceService attendanceService = new AttendanceService();
+        attendanceService.updateAttendance(attendanceObj);
+
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+        // TODO add your handling code here:
+        String selectedYear = (String) jComboBox3.getSelectedItem();
+    }//GEN-LAST:event_jComboBox3ActionPerformed
+
+    private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
+        // TODO add your handling code here:
+        String selectedMonth = (String) jComboBox4.getSelectedItem();
+    }//GEN-LAST:event_jComboBox4ActionPerformed
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+
+        jTextField14.setText(null);
+        jTextField15.setText(null);
+        jTextField1.setText(null);
+        jTextField2.setText(null);
+        jTextField3.setText(null);
+        jTextField4.setText(null);
+        jTextField5.setText(null);
+        jTextField6.setText(null);
+        jTextField7.setText(null);
+        jTextField8.setText(null);
+        jTextField10.setText(null);
+        jTextField11.setText(null);
+        jTextField12.setText(null);
+        jTextField9.setText(null);
+        jTextField13.setText(null);
 
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         int row = jTable2.getSelectedRow();
         int col = jTable2.getSelectedColumn();
 
         String employeeCode = (String) model.getValueAt(row, col);
-        AttendanceService attendanceService = new AttendanceService();
 
-        AttendanceObj obj = attendanceService.getAttendance(employeeCode);
+        String selectedYear = (String) jComboBox3.getSelectedItem();
+        String selectedMonth = (String) jComboBox4.getSelectedItem();
+        String yearMonth = selectedYear + selectedMonth;
+
+        AttendanceService attendanceService = new AttendanceService();
+        AttendanceObj obj = attendanceService.getAttendance(employeeCode, yearMonth);
+
+        jComboBox1.setSelectedItem(obj.getYearMonth().substring(0, 4));
+
+        if (yearMonth.length() <= 5) {
+            jComboBox2.setSelectedItem(yearMonth.substring(4, 5));
+        } else {
+            jComboBox2.setSelectedItem(yearMonth.substring(5, 6));
+        }
 
         jTextField14.setText(obj.getEmployeeCode());
         jTextField15.setText(obj.getName());
@@ -569,7 +760,7 @@ public class Attendance extends javax.swing.JFrame {
         jTextField9.setText(obj.getLateNightOvertime());
         jTextField13.setText(obj.getRemarks());
 
-    }
+    }//GEN-LAST:event_jTable2MouseClicked
 
     /**
      * @param args the command line arguments
@@ -618,9 +809,12 @@ public class Attendance extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton5;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -630,6 +824,8 @@ public class Attendance extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
