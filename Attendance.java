@@ -74,29 +74,29 @@ public class Attendance extends javax.swing.JFrame {
     /**
      * addActionListener
      */
-    private void addActionListener() {
-        // 初始化组件，包括 jButton1
-        // 其他初始化逻辑...
-
-        jButton1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // 弹出消息框显示 "已保存"
-                int choice = JOptionPane.showConfirmDialog(Attendance.this, "保存されました", "確認", JOptionPane.OK_CANCEL_OPTION);
-
-                if (choice == JOptionPane.OK_OPTION) {
-                    new Attendance().setVisible(true);
-                    dispose();
-                    // 如果用户点击了确认按钮，可以在这里执行返回 Attendance 页面的操作
-                    // 例如，你可以在这里添加返回逻辑
-                } else if (choice == JOptionPane.CANCEL_OPTION) {
-                    // 如果用户点击了取消按钮，可以在这里执行返回 Attendance 页面的操作
-                    new Attendance().setVisible(true);
-                    dispose();
-                }
-            }
-        });
-    }
+//    private void addActionListener() {
+//        // 初始化组件，包括 jButton1
+//        // 其他初始化逻辑...
+//
+//        jButton1.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                // 弹出消息框显示 "已保存"
+//                int choice = JOptionPane.showConfirmDialog(Attendance.this, "保存されました", "確認", JOptionPane.OK_CANCEL_OPTION);
+//
+//                if (choice == JOptionPane.OK_OPTION) {
+//                    new Attendance().setVisible(true);
+//                    dispose();
+//                    // 如果用户点击了确认按钮，可以在这里执行返回 Attendance 页面的操作
+//                    // 例如，你可以在这里添加返回逻辑
+//                } else if (choice == JOptionPane.CANCEL_OPTION) {
+//                    // 如果用户点击了取消按钮，可以在这里执行返回 Attendance 页面的操作
+//                    new Attendance().setVisible(true);
+//                    dispose();
+//                }
+//            }
+//        });
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -561,10 +561,10 @@ public class Attendance extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(Attendance.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        setSize(300, 150);
-        setDefaultCloseOperation(EmployeeInfoEditA.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
+//
+//        setSize(300, 150);
+//        setDefaultCloseOperation(EmployeeInfoEditA.EXIT_ON_CLOSE);
+//        setLocationRelativeTo(null);
 
 
     }//GEN-LAST:event_jButton1ActionPerformed
