@@ -115,7 +115,7 @@ public class MainForm extends javax.swing.JFrame {
 
         jButton6.setFont(new java.awt.Font("MS UI Gothic", 1, 18)); // NOI18N
         jButton6.setForeground(new java.awt.Color(255, 51, 153));
-        jButton6.setText("賃金台帳管理");
+        jButton6.setText("給与明細作成");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -193,7 +193,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
 
-        new PayrollLedger().setVisible(true);
+        new PayslipCreation().setVisible(true);
         this.dispose();
 
         // TODO add your handling code here:

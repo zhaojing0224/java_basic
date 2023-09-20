@@ -236,7 +236,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="99" green="33" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="&#x8cc3;&#x91d1;&#x53f0;&#x5e33;&#x7ba1;&#x7406;"/>
+            <Property name="text" type="java.lang.String" value="&#x7d66;&#x4e0e;&#x660e;&#x7d30;&#x4f5c;&#x6210;"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton6ActionPerformed"/>
