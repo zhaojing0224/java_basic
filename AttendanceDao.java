@@ -45,10 +45,9 @@ public class AttendanceDao {
             // String sql = "INSERT INTO EmployeeInfoDao (Name, Katakana, Gender, Birth, Phone_Number, Email, Date_of_Joining, Date_of_Resignation, Postal_Code, Address, Nationality, Contract_Type, Salary_Type, Job_Title, Office_Location, Position, Health_Insurance_Number, Labor_Insurance_Number, Period_of_Stay, Residence_Status, Deletion_Flag, Creation_Date, Update_Date) VALUES"
             //       + "(jTextField1', 'jTextField4', 'jTextField5', 'jTextField6', 'jTextField2', 'jTextField7', 'jTextField8', 'jTextField9', 'jTextField10', 'jTextField11', 'jTextField13', 'jTextField14', 'jTextField15', 'jTextField16', 'jTextField19', 'jTextField20', 'jTextField21', 'jTextField22', 'jTextField23', 'jTextField24');";
             StringBuffer sb = new StringBuffer();
-            sb.append("INSERT INTO attendance (employee_code, name, year_month, month_attendance_days, actual_attendance_days, monthly_working_hours, actual_working_hours, absent_ays, holiday_work_days, holiday_working_hours, weekday_overtime, late_night_overtime, tardiness_and_early_departure, remaining_paid_leave_days, consumed_paid_leave_days,remarks, deletion_flag, creation_date, update_date) VALUES(");
+            sb.append("INSERT INTO attendance (employee_code, year_month, month_attendance_days, actual_attendance_days, monthly_working_hours, actual_working_hours, absent_ays, holiday_work_days, holiday_working_hours, weekday_overtime, late_night_overtime, tardiness_and_early_departure, remaining_paid_leave_days, consumed_paid_leave_days,remarks, deletion_flag, creation_date, update_date) VALUES(");
 
             sb.append("'" + attendanceObj.getEmployeeCode() + "',");
-            sb.append("'" + attendanceObj.getName() + "',");
             sb.append("'" + attendanceObj.getYearMonth() + "',");
             sb.append("'" + attendanceObj.getMonthAttendanceDays() + "',");
             sb.append("'" + attendanceObj.getActualAttendanceDays() + "',");
@@ -178,7 +177,6 @@ public class AttendanceDao {
             // 6. 处理结果集
             while (resultSet.next()) {
                 String employeeCode = resultSet.getString("employee_code");
-                String name = resultSet.getString("name");
                 String monthAttendanceDays = resultSet.getString("month_attendance_days");
                 String actualAttendanceDays = resultSet.getString("actual_attendance_days");
                 String monthlyWorkingHours = resultSet.getString("monthly_working_hours");
@@ -196,7 +194,6 @@ public class AttendanceDao {
 
                 AttendanceObj obj = new AttendanceObj();
                 obj.setEmployeeCode(employeeCode);
-                obj.setName(name);
                 obj.setMonthAttendanceDays(monthAttendanceDays);
                 obj.setActualAttendanceDays(actualAttendanceDays);
                 obj.setMonthlyWorkingHours(monthlyWorkingHours);
@@ -256,11 +253,9 @@ public class AttendanceDao {
             // 6. 处理结果集
             while (resultSet.next()) {
                 String employeeCode = resultSet.getString("employee_code");
-                String name = resultSet.getString("name");
 
                 AttendanceObj obj = new AttendanceObj();
                 obj.setEmployeeCode(employeeCode);
-                obj.setName(name);
                 list.add(obj);
 
             }
@@ -308,7 +303,6 @@ public class AttendanceDao {
             // 6. 处理结果集
             while (resultSet.next()) {
                 String employeeCode = resultSet.getString("employee_code");
-                String name = resultSet.getString("name");
                 String monthAttendanceDays = resultSet.getString("month_attendance_days");
                 String actualAttendanceDays = resultSet.getString("actual_attendance_days");
                 String monthlyWorkingHours = resultSet.getString("monthly_working_hours");
@@ -326,7 +320,6 @@ public class AttendanceDao {
                 
 
                 obj.setEmployeeCode(employeeCode);
-                obj.setName(name);
                 obj.setMonthAttendanceDays(monthAttendanceDays);
                 obj.setActualAttendanceDays(actualAttendanceDays);
                 obj.setMonthlyWorkingHours(monthlyWorkingHours);
