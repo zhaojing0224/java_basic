@@ -43,10 +43,9 @@ public class SalaryCalculationDao {
             // String sql = "INSERT INTO EmployeeInfoDao (Name, Katakana, Gender, Birth, Phone_Number, Email, Date_of_Joining, Date_of_Resignation, Postal_Code, Address, Nationality, Contract_Type, Salary_Type, Job_Title, Office_Location, Position, Health_Insurance_Number, Labor_Insurance_Number, Period_of_Stay, Residence_Status, Deletion_Flag, Creation_Date, Update_Date) VALUES"
             //       + "(jTextField1', 'jTextField4', 'jTextField5', 'jTextField6', 'jTextField2', 'jTextField7', 'jTextField8', 'jTextField9', 'jTextField10', 'jTextField11', 'jTextField13', 'jTextField14', 'jTextField15', 'jTextField16', 'jTextField19', 'jTextField20', 'jTextField21', 'jTextField22', 'jTextField23', 'jTextField24');";
             StringBuffer sb = new StringBuffer();
-            sb.append("INSERT INTO SalaryCalculation (employee_code, name, year_month, base_salary, position_allowance, qualification_allowance, housing_allowance, family_allowance, commute_allowance, expected_monthly_overtime_allowance, late_night_allowance, holiday_allowance, total_payment_amount, health_insurance, employment_insurance,welfare_pension, Long_Term_Care_Insurance, total_insurance_premiums, withholding_incometax, resident_tax, total_deductions, total_taxes, total_deductible, deletion_flag, creation_date, update_date) VALUES(");
+            sb.append("INSERT INTO Salary_Calculation (employee_code, year_month, base_salary, position_allowance, qualification_allowance, housing_allowance, family_allowance, commute_allowance, expected_monthly_overtime_allowance, late_night_allowance, holiday_allowance, total_payment_amount, health_insurance, employment_insurance,welfare_pension, Long_Term_Care_Insurance, total_insurance_premiums, withholding_incometax, resident_tax, total_deductions, total_taxes, total_deductible, deletion_flag, creation_date, update_date) VALUES(");
 
             sb.append("'" + salaryCalculationObj.getEmployeeCode() + "',");
-            sb.append("'" + salaryCalculationObj.getName() + "',");
             sb.append("'" + salaryCalculationObj.getYearMonth() + "',");
             sb.append("'" + salaryCalculationObj.getBaseSalary() + "',");
             sb.append("'" + salaryCalculationObj.getPositionAllowance() + "',");
@@ -109,7 +108,7 @@ public class SalaryCalculationDao {
             Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
 
             // 3. 创建 SQL 语句
-            String sql = "SELECT * FROM SalaryCalculation";
+            String sql = "SELECT * FROM Salary_Calculation";
 
             // 4. 创建 Statement 对象
             Statement statement = connection.createStatement();
@@ -120,11 +119,9 @@ public class SalaryCalculationDao {
             // 6. 处理结果集
             while (resultSet.next()) {
                 String employeeCode = resultSet.getString("employee_code");
-                String name = resultSet.getString("name");
 
                 SalaryCalculationObj obj = new SalaryCalculationObj();
                 obj.setEmployeeCode(employeeCode);
-                obj.setName(name);
                 list.add(obj);
 
             }
@@ -157,7 +154,49 @@ public class SalaryCalculationDao {
             Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
 
             // 3. 创建 SQL 语句
-            String sql = "select * from SalaryCalculation where employee_code = '" + emCode + "'" + "and year_month = " + "'" + yMonth + "';";
+//            String sql = "SELECT Salary_Calculation.*, employee_info.name "
+//                    + "FROM Salary_Calculation "
+//                    + "INNER JOIN employee_info ON Salary_Calculation.employee_code = employee_info.employee_code "
+//                    + "WHERE Salary_Calculation.employee_code = '" + emCode + "'" + "and Salary_Calculation.year_month = " + "'" + yMonth + "';";
+            String sql = "SELECT "
+                    + "e.employee_code, "
+                    + "e.name, "
+                    + "s.year_month, "
+                    + "s.base_salary, "
+                    + "s.position_allowance, "
+                    + "s.qualification_allowance, "
+                    + "s.housing_allowance, "
+                    + "s.family_allowance, "
+                    + "s.commute_allowance, "
+                    + "s.expected_monthly_overtime_allowance, "
+                    + "s.late_night_allowance, "
+                    + "s.holiday_allowance, "
+                    + "s.total_payment_amount, "
+                    + "s.health_insurance, "
+                    + "s.employment_insurance, "
+                    + "s.welfare_pension, "
+                    + "s.long_term_care_insurance, "
+                    + "s.total_insurance_premiums, "
+                    + "s.withholding_incometax, "
+                    + "s.resident_tax, "
+                    + "s.total_deductions, "
+                    + "s.total_taxes, "
+                    + "s.total_deductible, "
+                    + "s.deletion_flag, "
+                    + "s.creation_date, "
+                    + "s.update_date "
+                    + "FROM "
+                    + "employee_info e "
+                    + "INNER JOIN salary_calculation s ON e.employee_code = s.employee_code "
+                    + "WHERE "
+                    + "e.employee_code = '"
+                    + emCode
+                    + "'"
+                    + "AND s.year_month = '"
+                    + yMonth
+                    + "'"
+                    + "AND e.deletion_flag = '0' "
+                    + "AND s.deletion_flag = '0'";
 
             System.out.println("emCode: " + emCode);
             System.out.println("yearMonth: " + yMonth);
@@ -251,29 +290,30 @@ public class SalaryCalculationDao {
 
             // 3. 创建 SQL 语句
             StringBuffer sb = new StringBuffer();
-            sb.append("UPDATE SalaryCalculation SET ");
+            sb.append("UPDATE Salary_Calculation SET ");
 
-            sb.append("'" + salaryCalculationObj.getBaseSalary() + "',");
-            sb.append("'" + salaryCalculationObj.getPositionAllowance() + "',");
-            sb.append("'" + salaryCalculationObj.getQualificationAllowance() + "',");
-            sb.append("'" + salaryCalculationObj.getHousingAllowance() + "',");
-            sb.append("'" + salaryCalculationObj.getFamilyAllowance() + "',");
-            sb.append("'" + salaryCalculationObj.getCommuteAllowance() + "',");
-            sb.append("'" + salaryCalculationObj.getExpectedMonthlyOvertimeAllowance() + "',");
-            sb.append("'" + salaryCalculationObj.getLateNightAllowance() + "',");
-            sb.append("'" + salaryCalculationObj.getHolidayAllowance() + "',");
-            sb.append("'" + salaryCalculationObj.getTotalPaymentAmount() + "',");
-            sb.append("'" + salaryCalculationObj.getHealthInsurance() + "',");
-            sb.append("'" + salaryCalculationObj.getEmploymentInsurance() + "',");
-            sb.append("'" + salaryCalculationObj.getWelfarePension() + "',");
-            sb.append("'" + salaryCalculationObj.getLongTermCareInsurance() + "',");
-            sb.append("'" + salaryCalculationObj.getTotalInsurancePremiums() + "',");
-            sb.append("'" + salaryCalculationObj.getWithholdingIncomeTax() + "',");
-            sb.append("'" + salaryCalculationObj.getResidentTax() + "',");
-            sb.append("'" + salaryCalculationObj.getTotalDeductions() + "',");
-            sb.append("'" + salaryCalculationObj.getTotalTaxes() + "',");
-            sb.append("'" + salaryCalculationObj.getTotalDeductible() + "',");
+            sb.append("base_salary = '" + salaryCalculationObj.getBaseSalary() + "',");
+            sb.append("position_allowance = '" + salaryCalculationObj.getPositionAllowance() + "',");
+            sb.append("qualification_allowance = '" + salaryCalculationObj.getQualificationAllowance() + "',");
+            sb.append("housing_allowance = '" + salaryCalculationObj.getHousingAllowance() + "',");
+            sb.append("family_allowance = '" + salaryCalculationObj.getFamilyAllowance() + "',");
+            sb.append("commute_allowance = '" + salaryCalculationObj.getCommuteAllowance() + "',");
+            sb.append("expected_monthly_overtime_allowance = '" + salaryCalculationObj.getExpectedMonthlyOvertimeAllowance() + "',");
+            sb.append("late_night_allowance = '" + salaryCalculationObj.getLateNightAllowance() + "',");
+            sb.append("holiday_allowance = '" + salaryCalculationObj.getHolidayAllowance() + "',");
+            sb.append("total_payment_amount = '" + salaryCalculationObj.getTotalPaymentAmount() + "',");
+            sb.append("health_insurance = '" + salaryCalculationObj.getHealthInsurance() + "',");
+            sb.append("employment_insurance = '" + salaryCalculationObj.getEmploymentInsurance() + "',");
+            sb.append("welfare_pension = '" + salaryCalculationObj.getWelfarePension() + "',");
+            sb.append("long_term_care_insurance = '" + salaryCalculationObj.getLongTermCareInsurance() + "',");
+            sb.append("total_insurance_premiums = '" + salaryCalculationObj.getTotalInsurancePremiums() + "',");
+            sb.append("withholding_incometax = '" + salaryCalculationObj.getWithholdingIncomeTax() + "',");
+            sb.append("resident_tax = '" + salaryCalculationObj.getResidentTax() + "',");
+            sb.append("total_deductions = '" + salaryCalculationObj.getTotalDeductions() + "',");
+            sb.append("total_taxes = '" + salaryCalculationObj.getTotalTaxes() + "',");
+            sb.append("total_deductible = '" + salaryCalculationObj.getTotalDeductible() + "'");
             sb.append("WHERE employee_code = '" + salaryCalculationObj.getEmployeeCode() + "'");
+            sb.append("AND year_month = '" + salaryCalculationObj.getYearMonth() + "'");
 
             System.out.println(sb.toString());
 

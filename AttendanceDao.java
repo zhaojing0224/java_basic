@@ -125,6 +125,7 @@ public class AttendanceDao {
             sb.append("consumed_paid_leave_days = '" + attendanceObj.getConsumedPaidLeaveDays() + "',");
             sb.append("remarks = '" + attendanceObj.getRemarks() + "'");
             sb.append("WHERE employee_code = '" + attendanceObj.getEmployeeCode() + "'");
+            sb.append("AND year_month = '" + attendanceObj.getYearMonth() + "'");
 //            sb.append("'" + 0 + "',");
 //            sb.append("'" + currentTime + "',");
 //            sb.append("'" + currentTime + "');");
@@ -288,7 +289,37 @@ public class AttendanceDao {
             Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
 
             // 3. 创建 SQL 语句
-            String sql = "select * from Attendance where employee_code = '" + emCode + "'" + "and year_month = " + "'" + yMonth + "';";
+//            String sql = "select * from Attendance where employee_code = '" + emCode + "'" + "and year_month = " + "'" + yMonth + "';";
+            String sql = "SELECT "
+                    + "e.employee_code, "
+                    + "a.year_month, "
+                    + "a.month_attendance_days, "
+                    + "a.actual_attendance_days, "
+                    + "a.monthly_working_hours, "
+                    + "a.actual_working_hours, "
+                    + "a.absent_ays, "
+                    + "a.holiday_work_days, "
+                    + "a.holiday_working_hours, "
+                    + "a.weekday_overtime, "
+                    + "a.late_night_overtime, "
+                    + "a.tardiness_and_early_departure, "
+                    + "a.remaining_paid_leave_days, "
+                    + "a.consumed_paid_leave_days, "
+                    + "a.deletion_flag, "
+                    + "a.creation_date, "
+                    + "a.update_date "
+                    + "FROM "
+                    + "employee_info e "
+                    + "INNER JOIN attendance a ON e.employee_code = a.employee_code "
+                    + "WHERE "
+                    + "e.employee_code = '"
+                    + emCode
+                    + "'"
+                    + "AND a.year_month = '"
+                    + yMonth
+                    + "'"
+                    + "AND e.deletion_flag = '0' "
+                    + "AND a.deletion_flag = '0'";
 
             System.out.println("emCode: " + emCode);
             System.out.println("yearMonth: " + yMonth);
@@ -315,9 +346,7 @@ public class AttendanceDao {
                 String tardinessAndEarlyDeparture = resultSet.getString("tardiness_and_early_departure");
                 String remainingPaidLeaveDays = resultSet.getString("remaining_paid_leave_days");
                 String consumedPaidLeaveDays = resultSet.getString("consumed_paid_leave_days");
-                String remarks = resultSet.getString("remarks");
                 String yearMonth = resultSet.getString("year_month");
-                
 
                 obj.setEmployeeCode(employeeCode);
                 obj.setMonthAttendanceDays(monthAttendanceDays);
@@ -332,7 +361,6 @@ public class AttendanceDao {
                 obj.setTardinessAndEarlyDeparture(tardinessAndEarlyDeparture);
                 obj.setRemainingPaidLeaveDays(remainingPaidLeaveDays);
                 obj.setConsumedPaidLeaveDays(consumedPaidLeaveDays);
-                obj.setRemarks(remarks);
                 obj.setYearMonth(yearMonth);
 
             }

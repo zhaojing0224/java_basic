@@ -25,7 +25,7 @@ public class ConnJdbc {
     private final String connectionURL = "jdbc:postgresql://" + hostName + "/" + dbName;
 
     public Connection connectDb() {
-        //Tạo đối tượng Connection
+        //创建连接对象
         Connection conn = null;
 
         try {

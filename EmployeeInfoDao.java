@@ -26,26 +26,23 @@ import javax.swing.table.DefaultTableModel;
  */
 public class EmployeeInfoDao {
 
+    Connection conn = null;
+    Statement stmt = null;
+    ResultSet rset = null;
+
+    final String jdbcUrl = "jdbc:postgresql://localhost:5432/zhao";
+    final String username = "postgres";
+    final String password = "postgres";
+
     public void addEmployeeInfo(EmployeeObj employeeObj) {
 
-        String jdbcUrl = "jdbc:postgresql://localhost:5432/zhao";
-        String username = "postgres";
-        String password = "postgres";
-
-        // 获取当前系统时间
         LocalDateTime currentTime = LocalDateTime.now();
 
         try {
-            // 1. 注册 PostgreSQL 驱动程序
-            Class.forName("org.postgresql.Driver");
-            // 2. 建立数据库连接
             Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
 
-            // 3. 创建 SQL 语句
-            // String sql = "INSERT INTO EmployeeInfoDao (Name, Katakana, Gender, Birth, Phone_Number, Email, Date_of_Joining, Date_of_Resignation, Postal_Code, Address, Nationality, Contract_Type, Salary_Type, Job_Title, Office_Location, Position, Health_Insurance_Number, Labor_Insurance_Number, Period_of_Stay, Residence_Status, Deletion_Flag, Creation_Date, Update_Date) VALUES"
-            //       + "(jTextField1', 'jTextField4', 'jTextField5', 'jTextField6', 'jTextField2', 'jTextField7', 'jTextField8', 'jTextField9', 'jTextField10', 'jTextField11', 'jTextField13', 'jTextField14', 'jTextField15', 'jTextField16', 'jTextField19', 'jTextField20', 'jTextField21', 'jTextField22', 'jTextField23', 'jTextField24');";
             StringBuffer sb = new StringBuffer();
-            sb.append("INSERT INTO employeeInfo (employee_code, name, katakana, gender, birth, phone_number, email, date_of_joining, date_of_resignation, postal_code, address, nationality, contract_type, salary_type, job_title, health_insurance_number, labor_insurance_number, residence_card_number, period_of_stay, residence_status, deletion_flag, creation_date, update_date) VALUES(");
+            sb.append("INSERT INTO Employee_Info (employee_code, name, katakana, gender, birth, phone_number, email, date_of_joining, date_of_resignation, postal_code, address, nationality, contract_type, salary_type, job_title, health_insurance_number, labor_insurance_number, residence_card_number, period_of_stay, residence_status, deletion_flag, creation_date, update_date) VALUES(");
 
             sb.append("'" + employeeObj.getEmployeeCode() + "',");
             sb.append("'" + employeeObj.getName() + "',");
@@ -83,8 +80,6 @@ public class EmployeeInfoDao {
             statement.close();
             connection.close();
 
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ConnJdbc.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(ConnJdbc.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -98,25 +93,12 @@ public class EmployeeInfoDao {
      */
     public void updateEmployeeInfo(EmployeeObj employeeObj) {
 
-        String jdbcUrl = "jdbc:postgresql://localhost:5432/zhao";
-        String username = "postgres";
-        String password = "postgres";
-
-        // 获取当前系统时间
-        LocalDateTime currentTime = LocalDateTime.now();
-
         try {
-            // 1. 注册 PostgreSQL 驱动程序
-            Class.forName("org.postgresql.Driver");
-            // 2. 建立数据库连接
             Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
 
-            // 3. 创建 SQL 语句
-            // String sql = "INSERT INTO EmployeeInfoDao (Name, Katakana, Gender, Birth, Phone_Number, Email, Date_of_Joining, Date_of_Resignation, Postal_Code, Address, Nationality, Contract_Type, Salary_Type, Job_Title, Office_Location, Position, Health_Insurance_Number, Labor_Insurance_Number, Period_of_Stay, Residence_Status, Deletion_Flag, Creation_Date, Update_Date) VALUES"
-            //       + "(jTextField1', 'jTextField4', 'jTextField5', 'jTextField6', 'jTextField2', 'jTextField7', 'jTextField8', 'jTextField9', 'jTextField10', 'jTextField11', 'jTextField13', 'jTextField14', 'jTextField15', 'jTextField16', 'jTextField19', 'jTextField20', 'jTextField21', 'jTextField22', 'jTextField23', 'jTextField24');";
             StringBuffer sb = new StringBuffer();
 
-            sb.append("UPDATE employeeInfo SET ");
+            sb.append("UPDATE Employee_Info SET ");
             sb.append("name = '" + employeeObj.getName() + "', ");
             sb.append("katakana = '" + employeeObj.getKatakana() + "', ");
             sb.append("gender = '" + employeeObj.getGender() + "', ");
@@ -150,8 +132,6 @@ public class EmployeeInfoDao {
             statement.close();
             connection.close();
 
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ConnJdbc.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(ConnJdbc.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -160,27 +140,14 @@ public class EmployeeInfoDao {
 
     public List<EmployeeObj> getEmployeeInfoList() {
 
-        System.out.println("ccccccc");
         List<EmployeeObj> list = new ArrayList<EmployeeObj>();
 
-        String jdbcUrl = "jdbc:postgresql://localhost:5432/zhao";
-        String username = "postgres";
-        String password = "postgres";
-
         try {
-            // 1. 注册 PostgreSQL 驱动程序
-            Class.forName("org.postgresql.Driver");
-            // 2. 建立数据库连接
             Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
 
-            // 3. 创建 SQL 语句
-            String sql = "select * from EmployeeInfo;";
+            String sql = "select * from Employee_Info;";
 
-            // 4. 创建 Statement 对象
             Statement statement = connection.createStatement();
-
-            System.out.println(sql);
-            // 5. 执行查询并获取结果集
             ResultSet resultSet = statement.executeQuery(sql);
 
             // 6. 处理结果集
@@ -233,9 +200,8 @@ public class EmployeeInfoDao {
             // 7. 关闭资源
             resultSet.close();
             statement.close();
-            connection.close();
 
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(ConnJdbc.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -248,23 +214,12 @@ public class EmployeeInfoDao {
 
         List<EmployeeObj> list = new ArrayList<EmployeeObj>();
 
-        String jdbcUrl = "jdbc:postgresql://localhost:5432/zhao";
-        String username = "postgres";
-        String password = "postgres";
-
         try {
-            // 1. 注册 PostgreSQL 驱动程序
-            Class.forName("org.postgresql.Driver");
-            // 2. 建立数据库连接
             Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
 
-            // 3. 创建 SQL 语句
-            String sql = "SELECT * FROM EmployeeInfo";
+            String sql = "SELECT * FROM Employee_Info";
 
-            // 4. 创建 Statement 对象
             Statement statement = connection.createStatement();
-
-            // 5. 执行查询并获取结果集
             ResultSet resultSet = statement.executeQuery(sql);
 
             // 6. 处理结果集
@@ -282,9 +237,8 @@ public class EmployeeInfoDao {
             // 7. 关闭资源
             resultSet.close();
             statement.close();
-            connection.close();
 
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(ConnJdbc.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -295,23 +249,12 @@ public class EmployeeInfoDao {
 
         List<EmployeeObj> list = new ArrayList<>();
 
-        String jdbcUrl = "jdbc:postgresql://localhost:5432/zhao";
-        String username = "postgres";
-        String password = "postgres";
-
         try {
-            // 1. 注册 PostgreSQL 驱动程序
-            Class.forName("org.postgresql.Driver");
-            // 2. 建立数据库连接
             Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
 
-            // 3. 创建 SQL 语句
-            String sql = "SELECT * FROM EmployeeInfo WHERE employee_code = ?";
+            String sql = "SELECT * FROM Employee_Info WHERE employee_code = ?";
 
-            // 4. 创建 Statement 对象
             Statement statement = connection.createStatement();
-
-            // 5. 执行查询并获取结果集
             ResultSet resultSet = statement.executeQuery(sql);
 
             // 6. 处理结果集
@@ -329,9 +272,8 @@ public class EmployeeInfoDao {
             // 7. 关闭资源
             resultSet.close();
             statement.close();
-            connection.close();
 
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(ConnJdbc.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
@@ -339,25 +281,12 @@ public class EmployeeInfoDao {
 
     public void deleteEmployeeInfo(String employeeCode) {
 
-        String jdbcUrl = "jdbc:postgresql://localhost:5432/zhao";
-        String username = "postgres";
-        String password = "postgres";
-
-        // 获取当前系统时间
-        LocalDateTime currentTime = LocalDateTime.now();
-
         try {
-            // 1. 注册 PostgreSQL 驱动程序
-            Class.forName("org.postgresql.Driver");
-            // 2. 建立数据库连接
             Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
-            // 3. 创建 SQL 语句
-            // String sql = "INSERT INTO EmployeeInfoDao (Name, Katakana, Gender, Birth, Phone_Number, Email, Date_of_Joining, Date_of_Resignation, Postal_Code, Address, Nationality, Contract_Type, Salary_Type, Job_Title, Office_Location, Position, Health_Insurance_Number, Labor_Insurance_Number, Period_of_Stay, Residence_Status, Deletion_Flag, Creation_Date, Update_Date) VALUES"
-            //       + "(jTextField1', 'jTextField4', 'jTextField5', 'jTextField6', 'jTextField2', 'jTextField7', 'jTextField8', 'jTextField9', 'jTextField10', 'jTextField11', 'jTextField13', 'jTextField14', 'jTextField15', 'jTextField16', 'jTextField19', 'jTextField20', 'jTextField21', 'jTextField22', 'jTextField23', 'jTextField24');";
 
             List<String> list = new ArrayList<String>();
-            String sqlx = "DELETE FROM employeeInfo WHERE employee_code = ?";
-            String sqly = "DELETE FROM employeeInfo WHERE employee_code = ?";
+            String sqlx = "DELETE FROM Employee_Info WHERE employee_code = ?";
+            String sqly = "DELETE FROM Employee_Info WHERE employee_code = ?";
             list.add(sqlx);
             list.add(sqly);
 
@@ -375,8 +304,6 @@ public class EmployeeInfoDao {
 
             connection.close();
 
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ConnJdbc.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(ConnJdbc.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -387,24 +314,12 @@ public class EmployeeInfoDao {
 
         EmployeeObj obj = new EmployeeObj();
 
-        String jdbcUrl = "jdbc:postgresql://localhost:5432/zhao";
-        String username = "postgres";
-        String password = "postgres";
-
         try {
-            // 1. 注册 PostgreSQL 驱动程序
-            Class.forName("org.postgresql.Driver");
-            // 2. 建立数据库连接
             Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
 
-            // 3. 创建 SQL 语句
-            String sql = "select * from EmployeeInfo where employee_code = '" + emCode + "';";
+            String sql = "select * from Employee_Info where employee_code = '" + emCode + "';";
 
-            // 4. 创建 Statement 对象
             Statement statement = connection.createStatement();
-
-            System.out.println(sql);
-            // 5. 执行查询并获取结果集
             ResultSet resultSet = statement.executeQuery(sql);
 
             // 6. 处理结果集
@@ -454,9 +369,8 @@ public class EmployeeInfoDao {
             // 7. 关闭资源
             resultSet.close();
             statement.close();
-            connection.close();
 
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(ConnJdbc.class.getName()).log(Level.SEVERE, null, ex);
         }
 
