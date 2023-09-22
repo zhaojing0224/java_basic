@@ -15,6 +15,22 @@ import java.sql.SQLException;
  */
 public class PayslipCreationService {
 
+    public void addPayslipCreation(PayslipCreationObj payslipCreationObj) {
+
+        PayslipCreationDao payslipCreationDao = new PayslipCreationDao();
+
+        payslipCreationDao.addPayslipCreation(payslipCreationObj);
+
+    }
+
+    public void setPayslipCreation(PayslipCreationObj payslipCreationObj) throws SQLException {
+
+        PayslipCreationDao payslipCreationDao = new PayslipCreationDao();
+
+        payslipCreationDao.setPayslipCreationList();
+
+    }
+
     public PayslipCreationObj getPayslipCreation(String emCode, String yMonth) {
 
         PayslipCreationDao payslipCreationDao = new PayslipCreationDao();
