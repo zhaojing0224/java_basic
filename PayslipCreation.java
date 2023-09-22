@@ -848,8 +848,6 @@ public class PayslipCreation extends javax.swing.JFrame {
         String employeeCode = (String) model.getValueAt(row, 0);
         if (col == 1) {
             String name = (String) model.getValueAt(row, 1);
-            // 在这里使用 "name" 的值
-            jTextField15.setText(name);
         }
 
         String selectedYear = (String) jComboBox1.getSelectedItem();

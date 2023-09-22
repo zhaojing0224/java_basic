@@ -185,7 +185,6 @@ public class SalaryCalculation extends javax.swing.JFrame {
         jLabel38 = new javax.swing.JLabel();
         jTextField19 = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
 
@@ -656,6 +655,11 @@ public class SalaryCalculation extends javax.swing.JFrame {
         jLabel38.setText("名前");
 
         jTextField19.setBackground(new java.awt.Color(240, 240, 240));
+        jTextField19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField19ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -747,8 +751,6 @@ public class SalaryCalculation extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setText("検索");
-
         jButton6.setText("保存");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -780,11 +782,6 @@ public class SalaryCalculation extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jButton6)
                         .addGap(36, 36, 36))))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(423, 423, 423)
-                    .addComponent(jButton5)
-                    .addContainerGap(513, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -797,11 +794,6 @@ public class SalaryCalculation extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(321, 321, 321)
-                    .addComponent(jButton5)
-                    .addContainerGap(369, Short.MAX_VALUE)))
         );
 
         pack();
@@ -847,7 +839,6 @@ public class SalaryCalculation extends javax.swing.JFrame {
         SalaryCalculationObj salaryCalculationObj = new SalaryCalculationObj();
 
         String employeeCode = jTextField18.getText();
-        String name = jTextField19.getText();
         String baseSalaryStr = jTextField14.getText();
         String positionAllowanceStr = jTextField15.getText();
         String qualificationAllowanceStr = jTextField16.getText();
@@ -919,7 +910,6 @@ public class SalaryCalculation extends javax.swing.JFrame {
         }
 
         salaryCalculationObj.setEmployeeCode(employeeCode);
-        salaryCalculationObj.setName(name);
         salaryCalculationObj.setBaseSalary(baseSalary);
         salaryCalculationObj.setPositionAllowance(positionAllowance);
         salaryCalculationObj.setQualificationAllowance(qualificationAllowance);
@@ -1007,7 +997,7 @@ public class SalaryCalculation extends javax.swing.JFrame {
 
                 // TODO add your handling code here
             } catch (SQLException ex) {
-                Logger.getLogger(EmployeeInfoEditA.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(EmployeeInfoEdit.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -1051,8 +1041,6 @@ public class SalaryCalculation extends javax.swing.JFrame {
         String employeeCode = (String) model.getValueAt(row, 0);
         if (col == 1) {
             String name = (String) model.getValueAt(row, 1);
-            // 在这里使用 "name" 的值
-            jTextField15.setText(name);
         }
 
         String selectedYear = (String) jComboBox1.getSelectedItem();
@@ -1062,12 +1050,11 @@ public class SalaryCalculation extends javax.swing.JFrame {
         SalaryCalculationService salaryCalculationService = new SalaryCalculationService();
         SalaryCalculationObj obj = salaryCalculationService.getSalaryCalculation(employeeCode, yearMonth);
 
-        jComboBox3.setSelectedItem(obj.getYearMonth().substring(0, 4));
-
-        if (yearMonth.length() <= 5) {
+        if (yearMonth != null && yearMonth.length() >= 4) {
+            jComboBox3.setSelectedItem(yearMonth.substring(0, 4));
+        }
+        if (yearMonth != null && yearMonth.length() >= 5) {
             jComboBox4.setSelectedItem(yearMonth.substring(4, 5));
-        } else {
-            jComboBox4.setSelectedItem(yearMonth.substring(5, 6));
         }
 
         jTextField18.setText(obj.getEmployeeCode());
@@ -1173,7 +1160,11 @@ public class SalaryCalculation extends javax.swing.JFrame {
         String totalPaymentAmountStr = jTextField40.getText();
         String totalDeductionsStr = jTextField50.getText();
 
-        int totalDeductible = Integer.valueOf(totalPaymentAmountStr) + Integer.valueOf(totalDeductionsStr);
+        double totalPaymentAmount = Double.parseDouble(totalPaymentAmountStr);
+        double totalDeductions = Double.parseDouble(totalDeductionsStr);
+
+        // 将 double 类型的值强制转换为 int 类型
+        int totalDeductible = (int) (totalPaymentAmount - totalDeductions);
 
         jTextField49.setText(String.valueOf(totalDeductible));
 
@@ -1186,7 +1177,6 @@ public class SalaryCalculation extends javax.swing.JFrame {
         SalaryCalculationObj salaryCalculationObj = new SalaryCalculationObj();
 
         String employeeCode = jTextField18.getText();
-        String name = jTextField19.getText();
         String baseSalaryStr = jTextField14.getText();
         String positionAllowanceStr = jTextField15.getText();
         String qualificationAllowanceStr = jTextField16.getText();
@@ -1258,7 +1248,6 @@ public class SalaryCalculation extends javax.swing.JFrame {
         }
 
         salaryCalculationObj.setEmployeeCode(employeeCode);
-        salaryCalculationObj.setName(name);
         salaryCalculationObj.setBaseSalary(baseSalary);
         salaryCalculationObj.setPositionAllowance(positionAllowance);
         salaryCalculationObj.setQualificationAllowance(qualificationAllowance);
@@ -1286,6 +1275,11 @@ public class SalaryCalculation extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jTextField19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField19ActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jTextField19ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1337,7 +1331,6 @@ public class SalaryCalculation extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;

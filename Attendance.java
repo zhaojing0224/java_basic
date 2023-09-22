@@ -245,8 +245,9 @@ public class Attendance extends javax.swing.JFrame {
                                     .addComponent(jLabel17))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(49, 49, 49))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -549,7 +550,7 @@ public class Attendance extends javax.swing.JFrame {
         }
 //
 //        setSize(300, 150);
-//        setDefaultCloseOperation(EmployeeInfoEditA.EXIT_ON_CLOSE);
+//        setDefaultCloseOperation(EmployeeInfoEdit.EXIT_ON_CLOSE);
 //        setLocationRelativeTo(null);
 
 
@@ -618,7 +619,7 @@ public class Attendance extends javax.swing.JFrame {
 
                 // TODO add your handling code here
             } catch (SQLException ex) {
-                Logger.getLogger(EmployeeInfoEditA.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(EmployeeInfoEdit.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -709,7 +710,10 @@ public class Attendance extends javax.swing.JFrame {
         int row = jTable2.getSelectedRow();
         int col = jTable2.getSelectedColumn();
 
-        String employeeCode = (String) model.getValueAt(row, col);
+        String employeeCode = (String) model.getValueAt(row, 0);
+        if (col == 1) {
+            String name = (String) model.getValueAt(row, 1);
+        }
 
         String selectedYear = (String) jComboBox3.getSelectedItem();
         String selectedMonth = (String) jComboBox4.getSelectedItem();
@@ -719,7 +723,6 @@ public class Attendance extends javax.swing.JFrame {
         AttendanceObj obj = attendanceService.getAttendance(employeeCode, yearMonth);
 
         jComboBox1.setSelectedItem(obj.getYearMonth().substring(0, 4));
-
         if (yearMonth.length() <= 5) {
             jComboBox2.setSelectedItem(yearMonth.substring(4, 5));
         } else {
